@@ -19,13 +19,18 @@ data$date <- as.Date(data$date)
 
 ## What is mean total number of steps taken per day?
 
-Histogram of Total Number of Steps taken per day ignoring NA values is as below
+1.Histogram of Total Number of Steps taken per day ignoring NA values:
 
 ```{r plot_hist}
 
 new_data <- data[!is.na(data$steps),]
 agg <- aggregate(steps~date,new_data,sum)
 hist(agg$steps,col='red',breaks=10,main="Histogram Of Steps",xlab='Total Steps Taken Each Day')
+```
+
+2.The Calculations of Mean and Median :
+
+```{r calcmean}
 men <- mean(agg$steps)
 med <- median(agg$steps)
 cat('Mean is ',men,'and Median is ',med)
@@ -35,21 +40,31 @@ cat('Mean is ',men,'and Median is ',med)
 
 ## What is the average daily activity pattern?
 
-Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis) is as below :
+1.Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis) :
 
 ```{r timeseries}
 
 agg2 <- aggregate(steps~interval,new_data,mean)
 plot(agg2$interval,agg2$steps,type='l',col='blue',xlab='Interval',ylab='Average Steps per Interval')
+
+```
+
+2.The 5-minute interval with max value ageraged over days :
+
+```{r}
 maxint <- agg2$interval[which.max(agg2$steps)]
 cat('The 5-minute interval having maximum steps averaged accross all days is',maxint )
 
 ```
 
 
+## Inputing missing values
 
-## Imputing missing values
-
+1. Total number of missing values in the dataset :
+```{r missingval}
+mval <- sum(is.na(data$steps))
+cat('Total number of missing values in the dataset is ', mval)
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
