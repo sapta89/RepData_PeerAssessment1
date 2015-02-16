@@ -5,16 +5,46 @@ output:
     keep_md: true
 ---
 
-
 ## Loading and preprocessing the data
 
+The Following code load the data from the activity.csv and process the data
+
+```{r processdata}
+
+data <- read.csv('activity.csv')
+data$date <- as.Date(data$date)
+
+```
 
 
 ## What is mean total number of steps taken per day?
 
+Histogram of Total Number of Steps taken per day ignoring NA values is as below
+
+```{r plot_hist}
+
+new_data <- data[!is.na(data$steps),]
+agg <- aggregate(steps~date,new_data,sum)
+hist(agg$steps,col='red',breaks=10,main="Histogram Of Steps",xlab='Total Steps Taken Each Day')
+men <- mean(agg$steps)
+med <- median(agg$steps)
+cat('Mean is ',men,'and Median is ',med)
+
+```
 
 
 ## What is the average daily activity pattern?
+
+Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis) is as below :
+
+```{r timeseries}
+
+agg2 <- aggregate(steps~interval,new_data,mean)
+plot(agg2$interval,agg2$steps,type='l',col='blue',xlab='Interval',ylab='Average Steps per Interval')
+maxint <- agg2$interval[which.max(agg2$steps)]
+cat('The 5-minute interval having maximum steps averaged accross all days is',maxint )
+
+```
 
 
 
