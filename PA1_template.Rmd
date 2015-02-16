@@ -98,3 +98,19 @@ change of Mean : `r men` -> `r men2`
 change of Median : `r med` -> `r med2`  
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+1. Creating a new factor variable in the dataset with two levels - "weekday"
+and "weekend".  
+```{r createfactor}
+
+data$date <- weekdays(data$date)
+data$date <- as.factor(ifelse(data$date=="Sunday" | data$date=="Saturday","weekend","weekday"))
+```
+
+2. Creating a 2 Panel Plot for steps in weekdays and weekends.  
+```{r panelplot}
+agg <- aggregate(steps~interval+date,data,sum)
+library(lattice)
+xyplot(steps~interval|date,data=agg,type='l',layout=c(1,2))
+
+```
