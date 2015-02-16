@@ -41,7 +41,7 @@ cat('Mean is ',men,'and Median is ',med)
 
 ## What is the average daily activity pattern?
 
-1.Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis) :
+1.Time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis) :  
 
 ```{r timeseries}
 
@@ -50,7 +50,7 @@ plot(agg2$interval,agg2$steps,type='l',col='blue',xlab='Interval',ylab='Average 
 
 ```
 
-2.The 5-minute interval with max value ageraged over days :
+2.The 5-minute interval with max value ageraged over days :  
 
 ```{r}
 maxint <- agg2$interval[which.max(agg2$steps)]
@@ -61,13 +61,13 @@ cat('The 5-minute interval having maximum steps averaged accross all days is',ma
 
 ## Inputing missing values
 
-1. Total number of missing values in the dataset :
+1. Total number of missing values in the dataset :  
 ```{r missingval}
 mval <- sum(is.na(data$steps))
 cat('Total number of missing values in the dataset is ', mval)
 ```
 
-2&3. Missing data is filled in by the mean of the corresponding interval accross the days.
+2&3. Missing data is filled in by the mean of the corresponding interval accross the days.  
 
 ```{r filldata}
 
@@ -82,16 +82,19 @@ for(i in 1:len)
 }
 ```
 
-4. Histogram of steps with mean and median.
+4. Histogram of steps with mean and median.  
 ```{r newhist}
 
 agg <- aggregate(steps~date,data,sum)
 hist(agg$steps,col='green',breaks=10,main="Histogram Of Steps",xlab='Total Steps Taken Each Day')
-men <- mean(agg$steps)
-med <- median(agg$steps)
-cat('Mean  is ',men,'and Median is ',med)
+men2 <- mean(agg$steps)
+med2 <- median(agg$steps)
+cat('Mean  is ',men2,'and Median is ',med2)
 
 ```
 
+The values of Mean and Median differs from the first unchanged data slightly.  
+change of Mean : `r men` -> `r men2`  
+change of Median : `r med` -> `r med2`  
 
 ## Are there differences in activity patterns between weekdays and weekends?
