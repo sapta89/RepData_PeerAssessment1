@@ -26,6 +26,7 @@ data$date <- as.Date(data$date)
 new_data <- data[!is.na(data$steps),]
 agg <- aggregate(steps~date,new_data,sum)
 hist(agg$steps,col='red',breaks=10,main="Histogram Of Steps",xlab='Total Steps Taken Each Day')
+
 ```
 
 2.The Calculations of Mean and Median :
@@ -64,6 +65,32 @@ cat('The 5-minute interval having maximum steps averaged accross all days is',ma
 ```{r missingval}
 mval <- sum(is.na(data$steps))
 cat('Total number of missing values in the dataset is ', mval)
+```
+
+2&3. Missing data is filled in by the mean of the corresponding interval accross the days.
+
+```{r filldata}
+
+meanval <- data.frame(round(agg2$steps),row.names=agg2$interval)
+len <- dim(data)[1]
+for(i in 1:len)
+{
+    if(is.na(data$steps[i]))
+    {
+        data$steps[i] <- meanval[as.character(data$interval[i]),1]
+    }
+}
+```
+
+4. Histogram of steps with mean and median.
+```{r newhist}
+
+agg <- aggregate(steps~date,data,sum)
+hist(agg$steps,col='green',breaks=10,main="Histogram Of Steps",xlab='Total Steps Taken Each Day')
+men <- mean(agg$steps)
+med <- median(agg$steps)
+cat('Mean  is ',men,'and Median is ',med)
+
 ```
 
 
